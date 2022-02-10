@@ -397,7 +397,7 @@ namespace Tupiniquim.ConsoleApp
 
                             Console.WriteLine("");
 
-                            // Linha 402 a Linha 421: Condicoes para verificar se a posicao do robo 2 apos a movimentacao eh valida ou se sera necessario passar outras instrucoes.
+                            // Linha 402 a Linha 435: Condicoes para verificar se a posicao do robo 2 apos a movimentacao eh valida ou se sera necessario passar outras instrucoes.
 
                             if (crdRobII[0] < 0 || crdRobII[1] < 0 || crdRobII[0] > crdArea[0] || crdRobII[1] > crdArea[1])
                             {
@@ -405,6 +405,21 @@ namespace Tupiniquim.ConsoleApp
                                 Console.WriteLine("ERRO!\nPosicionamento do robo invalido.");
                                 Console.WriteLine("");
                                 Console.WriteLine("Mensagem de erro: Voce digitou um comando que leva a uma coordenada invalida, verifique se as instrucoes levam para uma coordenada x,y dentro da area determinada.");
+                                Console.ResetColor();
+                                Console.WriteLine("");
+                                Console.Write("Aperte ENTER para prosseguir.");
+                                Console.ReadLine();
+                                Console.WriteLine("");
+                                dirRobII = bckDirRobII;
+                                crdRobII[0] = bckCrdRobII[0];
+                                crdRobII[1] = bckCrdRobII[1];
+                            }
+                            else if (crdRobII[0] == crdRobI[0] && crdRobII[1] == crdRobI[1])
+                            {
+                                Console.ForegroundColor = ConsoleColor.Red;
+                                Console.WriteLine("ERRO!\nPosicionamento do robo invalido.");
+                                Console.WriteLine("");
+                                Console.WriteLine("Mensagem de erro: Voce digitou um comando que leva o Robo 2 a mesma coordenada do Robo 1, verifique as coordenadas e digite novamente.");
                                 Console.ResetColor();
                                 Console.WriteLine("");
                                 Console.Write("Aperte ENTER para prosseguir.");
@@ -423,7 +438,7 @@ namespace Tupiniquim.ConsoleApp
                         Console.WriteLine("=======> Resultado dos Movimentos <=======");
                         Console.WriteLine("");
 
-                        // Linha 428 a Linha 432: Output do resultado.
+                        // Linha 443 a Linha 447: Output do resultado.
 
                         Console.ForegroundColor = ConsoleColor.Green;
                         Console.WriteLine("Coordenada final e posicionamento do Robo I (X, Y, D): {0}, {1}, {2}.", crdRobI[0], crdRobI[1], dirRobI);
