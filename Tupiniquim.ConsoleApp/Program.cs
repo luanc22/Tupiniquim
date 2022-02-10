@@ -351,10 +351,39 @@ namespace Tupiniquim.ConsoleApp
                         Console.WriteLine("Coordenada final e posicionamento do Robo II (X, Y, D): {0}, {1}, {2}.", crdRobII[0], crdRobII[1], dirRobII);
                         Console.ResetColor();
                         Console.WriteLine("");
-                        Console.Write("Confirme as informacoes digitadas e aperte ENTER para prosseguir.");
-                        Console.ReadLine();
-                        Console.Clear();
 
+                        bool opcaoValida = false;
+
+                        while (opcaoValida == false)
+                        {
+                            Console.WriteLine("Caso deseje realizar rodar o programa novamente e inserir novos comandos, digite 1 e aperte ENTER.");
+                            Console.WriteLine("Caso deseje fechar o programa, digite 0 e aperte ENTER.");
+                            Console.Write("Opcao escolhida: ");
+                            string fecharBotao = Console.ReadLine();
+
+                            if (fecharBotao == "0")
+                            {
+                                fecharApp = true;
+                                opcaoValida = true;
+                            }
+                            else if (fecharBotao == "1")
+                            {
+                                Console.Clear();
+                                opcaoValida = true;
+                                continue;
+                            }
+                            else
+                            {
+                                Console.WriteLine("");
+                                Console.ForegroundColor = ConsoleColor.Red;
+                                Console.WriteLine("Opcao invalida, selecione uma opcao valida!");
+                                Console.ResetColor();
+                                Console.WriteLine("");
+                                Console.WriteLine("Aperte ENTER para prosseguir.");
+                                Console.ReadLine();
+                                continue;
+                            }
+                        }
                     }
                 }
             }
