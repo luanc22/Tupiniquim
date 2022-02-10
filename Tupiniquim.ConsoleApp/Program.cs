@@ -6,8 +6,45 @@ namespace Tupiniquim.ConsoleApp
     {
         static void Main(string[] args)
         {
-            bool fecharApp = false;
+            // Linha 9 a Linha 47: Declaracao das variaveis utilizadas no programa.
 
+            // Variaveis para declaracao das coordenadas de area.
+            // crd = Coordenada; crdArea[0] = Coordenada X, crdArea[1] = Coordenada Y.
+            string inputCrdArea;
+            int[] crdArea = new int[2];
+
+            // Variaveis para declarao das coordenadas do robo 1.
+            // RobI = Robo 1; dir = Direcao; crdRobI[] = Coordenadas do Robo.
+            int[] crdRobI = new int[2];
+            string inputCrdRobI;
+            string uppChrI;
+            char dirRobI;
+            int dirRobINum;
+
+            // Variaveis para declarao das coordenadas do robo 2.
+            // RobII = Robo 2; dir = Direcao; crdRobII[] = Coordenadas do Robo.
+            int[] crdRobII = new int[2];
+            string inputCrdRobII;
+            string uppChrII;
+            char dirRobII;
+            int dirRobIINum;
+
+            // Variavel declarada para backup das coordenadas iniciais, em caso, o input de instrucoes dos robos retorne erro.
+            // bck = Backup.
+            char bckDirRobI;
+            int[] bckCrdRobI = new int[2];
+            char bckDirRobII;
+            int[] bckCrdRobII = new int[2];
+
+            // Variavel declarada para receber as instrucoes dos robos e transformar em letra maiuscula, caso seja inputado em minuscula.
+            // cmd = Comando; Str = String; Up = Uppercase.
+            string cmdStrI;
+            string cmdStrUpI;
+            string cmdStrII;
+            string cmdStrUpII;
+
+            // Variavel e abertura do loop para rodar o programa novamente apos o usuario utilizar o mesmo.
+            bool fecharApp = false;
             while (fecharApp == false)
             {
                 Console.WriteLine("===== Projeto Tupiniquim I =====");
@@ -25,30 +62,36 @@ namespace Tupiniquim.ConsoleApp
                 Console.WriteLine("===================================");
 
                 Console.WriteLine("");
+                Console.WriteLine("=======> Area <=======");
+                Console.WriteLine("");
+
+                // Linha 68 a Linha 74: Input e atribuicao das coordenadas da area.
 
                 Console.Write("Digite os valores inteiros da area de analise, separados por virgula (X, Y): ");
-                string inputCrdArea = Console.ReadLine();
+                inputCrdArea = Console.ReadLine();
                 string[] inputCrdAreaArr = inputCrdArea.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
-                int[] crdArea = new int[2];
                 crdArea[0] = int.Parse(inputCrdAreaArr[0]);
                 crdArea[1] = int.Parse(inputCrdAreaArr[1]);
 
                 Console.WriteLine("");
+                Console.WriteLine("=======> Robo 1 <=======");
+                Console.WriteLine("");
+
+                // Linha 82 a Linha 90: Input e atribuicao das coordenadas e direcao iniciais do Robo 1.
 
                 Console.Write("Digite a coordenada inicial do Robo I e a sua direcao inicial, separados por virgula (X, Y, D): ");
-                string inputCrdRobI = Console.ReadLine();
+                inputCrdRobI = Console.ReadLine();
                 string[] inputCrdRobIArr = inputCrdRobI.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
                 inputCrdRobIArr[2] = inputCrdRobIArr[2].Replace(" ", "");
-                int[] crdRobI = new int[2];
-                char dirRobI;
 
                 crdRobI[0] = int.Parse(inputCrdRobIArr[0]);
                 crdRobI[1] = int.Parse(inputCrdRobIArr[1]);
-                string uppChrI = inputCrdRobIArr[2].ToUpper();
+                uppChrI = inputCrdRobIArr[2].ToUpper();
                 dirRobI = char.Parse(uppChrI);
 
-
                 Console.WriteLine("");
+
+                // Linha 96 a Linha 135: Condicoes para verificar se as coordenadas de Area e do Robo I passadas sao validas.
 
                 if (crdArea[0] <= 0 || crdArea[1] <= 0)
                 {
@@ -92,18 +135,24 @@ namespace Tupiniquim.ConsoleApp
                 }
                 else
                 {
-                    int dirRobINum = 0;
-                    char bckDirRobI = dirRobI;
-                    int[] bckCrdRobI = { crdRobI[0], crdRobI[1] };
-                    bool opcaoValidaI = false;
+                    // Atribuicao de valores as variveis de backup do Robo 1.
+                    dirRobINum = 0;
+                    bckDirRobI = dirRobI;
+                    bckCrdRobI[0] = crdRobI[0];
+                    bckCrdRobI[1] = crdRobI[1];
 
-                    while (opcaoValidaI == false)
+                    // Variavel e abertura do loop para rodar a opcao de digitar o comando novamente, em caso, o input de instrucoes do robo 1 retorne erro.
+                    bool posicaoValidaI = false;
+                    while (posicaoValidaI == false)
                     {
-                        Console.Write("Digite sequencialmente os comandos para o Robo I (EMEMEMEMDMDM): ");
-                        string cmdStrII = Console.ReadLine();
-                        string cmdStrUpII = cmdStrII.ToUpper();
-                        char[] cmdSqcII = cmdStrUpII.ToCharArray();
+                        // Linha 150 a Linha 153: Input da sequencia de comandos do Robo 1.
 
+                        Console.Write("Digite sequencialmente os comandos para o Robo I (ex. EMEMEMEMDMDM): ");
+                        cmdStrI = Console.ReadLine();
+                        cmdStrUpI = cmdStrI.ToUpper();
+                        char[] cmdSqcI = cmdStrUpI.ToCharArray();
+
+                        // Switch para passar a direcao do Robo 1 em numero.
                         switch (dirRobI)
                         {
                             case 'N':
@@ -120,9 +169,13 @@ namespace Tupiniquim.ConsoleApp
                                 break;
                         }
 
-                        for (int i = 0; i < cmdSqcII.Length; i++)
+                        // For para verificar as instrucoes passadas e realizar as instrucoes.
+                        for (int i = 0; i < cmdSqcI.Length; i++)
                         {
-                            if (cmdSqcII[i] == 'E')
+                            // Como atribuimos numeros a direcoes, funciona como um relogio.
+                            // Caso voce vire anti-horario, ou esquerda, voce diminui o valor. Caso voce vire horario, ou direita, voce aumenta o valor.
+                            // Caso esse valor passe da quantidade de direcoes (0 ou 5), ele retorna para o valor da proxima direcao (4 ou 1).
+                            if (cmdSqcI[i] == 'E')
                             {
                                 dirRobINum = dirRobINum - 1;
                                 if (dirRobINum == 0)
@@ -130,7 +183,7 @@ namespace Tupiniquim.ConsoleApp
                                     dirRobINum = 4;
                                 }
                             }
-                            else if (cmdSqcII[i] == 'D')
+                            else if (cmdSqcI[i] == 'D')
                             {
                                 dirRobINum = dirRobINum + 1;
                                 if (dirRobINum == 5)
@@ -138,8 +191,12 @@ namespace Tupiniquim.ConsoleApp
                                     dirRobINum = 1;
                                 }
                             }
-                            else if (cmdSqcII[i] == 'M')
+                            else if (cmdSqcI[i] == 'M')
                             {
+                                // Considerando as direcoes como numeros e pensando em um plano cartesiano de X e Y.
+                                // se 1 = Norte, entao a coordenada Y tem que aumentar em 1 ao se movimentar.
+                                // se 2 = Leste, entao a coordenada X tem que aumentar em 1 ao se movimentar.
+                                // o mesmo se repete negativamente para Sul e Oeste.
                                 switch (dirRobINum)
                                 {
                                     case 1:
@@ -158,6 +215,7 @@ namespace Tupiniquim.ConsoleApp
                             }
                         }
 
+                        // Retornando o numero da direcao apos a movimentacao para letra, afim de mostrar no resultado.
                         switch (dirRobINum)
                         {
                             case 1:
@@ -176,6 +234,8 @@ namespace Tupiniquim.ConsoleApp
 
                         Console.WriteLine("");
 
+                        // Linha 239 a Linha 258: Condicoes para verificar se a posicao do robo 1 apos a movimentacao eh valida ou se sera necessario passar outras instrucoes.
+
                         if (crdRobI[0] < 0 || crdRobI[1] < 0 || crdRobI[0] >= crdArea[0] || crdRobI[1] >= crdArea[1])
                         {
                             Console.ForegroundColor = ConsoleColor.Red;
@@ -193,21 +253,26 @@ namespace Tupiniquim.ConsoleApp
                         }
                         else
                         {
-                            opcaoValidaI = true;
+                            posicaoValidaI = true;
                         }
                     }
 
+                    Console.WriteLine("=======> Robo 2 <=======");
+                    Console.WriteLine("");
+
+                    // Linha 265 a Linha 273: Input e atribuicao das coordenadas e direcao iniciais do Robo 2.
+
                     Console.Write("Digite a coordenada inicial do Robo II e a sua direcao inicial, separados por virgula (X, Y, D): ");
-                    string inputCrdRobII = Console.ReadLine();
+                    inputCrdRobII = Console.ReadLine();
                     string[] inputCrdRobIIArr = inputCrdRobII.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
                     inputCrdRobIIArr[2] = inputCrdRobIIArr[2].Replace(" ", "");
-                    int[] crdRobII = new int[2];
-                    char dirRobII;
 
                     crdRobII[0] = int.Parse(inputCrdRobIIArr[0]);
                     crdRobII[1] = int.Parse(inputCrdRobIIArr[1]);
-                    string uppChrII = inputCrdRobIIArr[2].ToUpper();
+                    uppChrII = inputCrdRobIIArr[2].ToUpper();
                     dirRobII = char.Parse(uppChrII);
+
+                    // Linha 277 a Linha 304: Condicoes para verificar se as coordenadas e a direcao iniciais do Robo 2 sao validas.
 
                     if (crdRobII[0] < 0 || crdRobII[1] < 0 || crdRobII[0] > crdArea[0] || crdRobII[1] > crdArea[1])
                     {
@@ -241,17 +306,24 @@ namespace Tupiniquim.ConsoleApp
                     {
                         Console.WriteLine("");
 
-                        int dirRobIINum = 0;
-                        char bckDirRobII = dirRobII;
-                        int[] bckCrdRobII = { crdRobII[0], crdRobII[1] };
-                        bool opcaoValidaII = false;
+                        // Atribuicao de valores as variveis de backup do Robo 2.
+                        dirRobIINum = 0;
+                        bckDirRobII = dirRobII;
+                        bckCrdRobII[0] = crdRobII[0];
+                        bckCrdRobII[1] = crdRobII[1];
 
-                        while (opcaoValidaII == false)
+                        // Variavel e abertura do loop para rodar a opcao de digitar o comando novamente, em caso, o input de instrucoes do robo 2 retorne erro.
+                        bool posicaoValidaII = false;
+                        while (posicaoValidaII == false)
                         {
-                            Console.Write("Digite sequencialmente os comandos para o Robo II (EMEMEMEMDMDM): ");
-                            string cmdStr = Console.ReadLine();
-                            string cmdStrUp = cmdStr.ToUpper();
-                            char[] cmdSqc = cmdStrUp.ToCharArray();
+                            // Linha 321 a Linha 324: Input da sequencia de comandos do Robo 2.
+
+                            Console.Write("Digite sequencialmente os comandos para o Robo II (ex. EMEMEMEMDMDM): ");
+                            cmdStrII = Console.ReadLine();
+                            cmdStrUpII = cmdStrII.ToUpper();
+                            char[] cmdSqcII = cmdStrUpII.ToCharArray();
+
+                            // Linha 328 a Linha 396: Segue a mesma logica do Robo 1 para calcular a direcao e movimento.
 
                             switch (dirRobII)
                             {
@@ -269,9 +341,9 @@ namespace Tupiniquim.ConsoleApp
                                     break;
                             }
 
-                            for (int i = 0; i < cmdSqc.Length; i++)
+                            for (int i = 0; i < cmdSqcII.Length; i++)
                             {
-                                if (cmdSqc[i] == 'E')
+                                if (cmdSqcII[i] == 'E')
                                 {
                                     dirRobIINum = dirRobIINum - 1;
                                     if (dirRobIINum == 0)
@@ -279,7 +351,7 @@ namespace Tupiniquim.ConsoleApp
                                         dirRobIINum = 4;
                                     }
                                 }
-                                else if (cmdSqc[i] == 'D')
+                                else if (cmdSqcII[i] == 'D')
                                 {
                                     dirRobIINum = dirRobIINum + 1;
                                     if (dirRobIINum == 5)
@@ -287,7 +359,7 @@ namespace Tupiniquim.ConsoleApp
                                         dirRobIINum = 1;
                                     }
                                 }
-                                else if (cmdSqc[i] == 'M')
+                                else if (cmdSqcII[i] == 'M')
                                 {
                                     switch (dirRobIINum)
                                     {
@@ -325,6 +397,8 @@ namespace Tupiniquim.ConsoleApp
 
                             Console.WriteLine("");
 
+                            // Linha 402 a Linha 421: Condicoes para verificar se a posicao do robo 2 apos a movimentacao eh valida ou se sera necessario passar outras instrucoes.
+
                             if (crdRobII[0] < 0 || crdRobII[1] < 0 || crdRobII[0] >= crdArea[0] || crdRobII[1] >= crdArea[1])
                             {
                                 Console.ForegroundColor = ConsoleColor.Red;
@@ -342,9 +416,14 @@ namespace Tupiniquim.ConsoleApp
                             }
                             else
                             {
-                                opcaoValidaII = true;
+                                posicaoValidaII = true;
                             }
                         }
+
+                        Console.WriteLine("=======> Resultado dos Movimentos <=======");
+                        Console.WriteLine("");
+
+                        // Linha 428 a Linha 432: Output do resultado.
 
                         Console.ForegroundColor = ConsoleColor.Green;
                         Console.WriteLine("Coordenada final e posicionamento do Robo I (X, Y, D): {0}, {1}, {2}.", crdRobI[0], crdRobI[1], dirRobI);
@@ -352,8 +431,8 @@ namespace Tupiniquim.ConsoleApp
                         Console.ResetColor();
                         Console.WriteLine("");
 
+                        // Variavel e abertura do loop para rodar o menu de opcoes, para caso o usuario deseje fechar o programa ou rodalo novamente.
                         bool opcaoValida = false;
-
                         while (opcaoValida == false)
                         {
                             Console.WriteLine("Caso deseje realizar rodar o programa novamente e inserir novos comandos, digite 1 e aperte ENTER.");
@@ -390,3 +469,6 @@ namespace Tupiniquim.ConsoleApp
         }
     }
 }
+
+// Obrigado por ler o codigo ate aqui e espero que tenha um bom dia!
+// Codigo feito pelo Luan da Academia do Programador 2022.
