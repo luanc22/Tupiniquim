@@ -15,6 +15,7 @@ namespace Tupiniquim.ConsoleApp
                 Console.WriteLine("Utilize esse programa parar guiar e controlar os robos tripulantes da Tupiniquim I por Marte.");
                 Console.WriteLine("");
                 Console.WriteLine("===================================");
+                Console.WriteLine("");
                 Console.WriteLine("Instrucoes para utilizar os robos.");
                 Console.WriteLine("");
                 Console.WriteLine("Passe a instrucao D para move-lo a 90 graus a direita.");
@@ -45,7 +46,7 @@ namespace Tupiniquim.ConsoleApp
                 crdRobI[1] = int.Parse(inputCrdRobIArr[1]);
                 string uppChrI = inputCrdRobIArr[2].ToUpper();
                 dirRobI = char.Parse(uppChrI);
- 
+
 
                 Console.WriteLine("");
 
@@ -92,12 +93,16 @@ namespace Tupiniquim.ConsoleApp
                 else
                 {
                     int dirRobINum = 0;
-                    bool opcaoValida = false;
+                    char bckDirRobI = dirRobI;
+                    int[] bckCrdRobI = { crdRobI[0], crdRobI[1] };
+                    bool opcaoValidaI = false;
 
-                    while (opcaoValida == false)
+                    while (opcaoValidaI == false)
                     {
                         Console.Write("Digite sequencialmente os comandos para o Robo I (EMEMEMEMDMDM): ");
-                        char[] cmdSqc = Console.ReadLine().ToCharArray();
+                        string cmdStrII = Console.ReadLine();
+                        string cmdStrUpII = cmdStrII.ToUpper();
+                        char[] cmdSqcII = cmdStrUpII.ToCharArray();
 
                         switch (dirRobI)
                         {
@@ -115,9 +120,9 @@ namespace Tupiniquim.ConsoleApp
                                 break;
                         }
 
-                        for (int i = 0; i < cmdSqc.Length; i++)
+                        for (int i = 0; i < cmdSqcII.Length; i++)
                         {
-                            if (cmdSqc[i] == 'E')
+                            if (cmdSqcII[i] == 'E')
                             {
                                 dirRobINum = dirRobINum - 1;
                                 if (dirRobINum == 0)
@@ -125,7 +130,7 @@ namespace Tupiniquim.ConsoleApp
                                     dirRobINum = 4;
                                 }
                             }
-                            else if (cmdSqc[i] == 'D')
+                            else if (cmdSqcII[i] == 'D')
                             {
                                 dirRobINum = dirRobINum + 1;
                                 if (dirRobINum == 5)
@@ -133,21 +138,21 @@ namespace Tupiniquim.ConsoleApp
                                     dirRobINum = 1;
                                 }
                             }
-                            else if (cmdSqc[i] == 'M')
+                            else if (cmdSqcII[i] == 'M')
                             {
                                 switch (dirRobINum)
                                 {
                                     case 1:
-                                        crdRobI[0] = crdRobI[0] + 1;
-                                        break;
-                                    case 2:
                                         crdRobI[1] = crdRobI[1] + 1;
                                         break;
+                                    case 2:
+                                        crdRobI[0] = crdRobI[0] + 1;
+                                        break;
                                     case 3:
-                                        crdRobI[0] = crdRobI[0] - 1;
+                                        crdRobI[1] = crdRobI[1] - 1;
                                         break;
                                     case 4:
-                                        crdRobI[1] = crdRobI[1] - 1;
+                                        crdRobI[0] = crdRobI[0] - 1;
                                         break;
                                 }
                             }
@@ -171,7 +176,7 @@ namespace Tupiniquim.ConsoleApp
 
                         Console.WriteLine("");
 
-                        if (crdRobI[0] < 0 || crdRobI[1] < 0 || crdRobI[0] > crdArea[0] || crdRobI[1] > crdArea[1])
+                        if (crdRobI[0] < 0 || crdRobI[1] < 0 || crdRobI[0] >= crdArea[0] || crdRobI[1] >= crdArea[1])
                         {
                             Console.ForegroundColor = ConsoleColor.Red;
                             Console.WriteLine("ERRO!\nPosicionamento do robo invalido.");
@@ -181,26 +186,14 @@ namespace Tupiniquim.ConsoleApp
                             Console.WriteLine("");
                             Console.Write("Aperte ENTER para prosseguir.");
                             Console.ReadLine();
-                            Console.Clear();
-                            
-                            // ARRUMAR AQUI DEPOIS
-
-                            Console.WriteLine("===== Projeto Tupiniquim I =====");
                             Console.WriteLine("");
-                            Console.WriteLine("Utilize esse programa parar guiar e controlar os robos tripulantes da Tupiniquim I por Marte.");
-                            Console.WriteLine("");
-                            Console.WriteLine("===================================");
-                            Console.WriteLine("Instrucoes para utilizar os robos.");
-                            Console.WriteLine("");
-                            Console.WriteLine("Passe a instrucao D para move-lo a 90 graus a direita.");
-                            Console.WriteLine("Passe a instrucao E para move-lo a 90 graus a esquerda.");
-                            Console.WriteLine("Passe a instrucao M para move-lo a a frente.");
-                            Console.WriteLine("");
-                            Console.WriteLine("===================================");
+                            dirRobI = bckDirRobI;
+                            crdRobI[0] = bckCrdRobI[0];
+                            crdRobI[1] = bckCrdRobI[1];
                         }
                         else
                         {
-                            opcaoValida = true;
+                            opcaoValidaI = true;
                         }
                     }
 
@@ -214,17 +207,155 @@ namespace Tupiniquim.ConsoleApp
                     crdRobII[0] = int.Parse(inputCrdRobIIArr[0]);
                     crdRobII[1] = int.Parse(inputCrdRobIIArr[1]);
                     string uppChrII = inputCrdRobIIArr[2].ToUpper();
-                    dirRobI = char.Parse(uppChrII);
+                    dirRobII = char.Parse(uppChrII);
 
+                    if (crdRobII[0] < 0 || crdRobII[1] < 0 || crdRobII[0] > crdArea[0] || crdRobII[1] > crdArea[1])
+                    {
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.WriteLine("ERRO!\nPosicao inicial invalida.");
+                        Console.WriteLine("");
+                        Console.WriteLine("Mensagem de erro: Voce digitou uma coordenada inicial invalida para robo, esta coordenada pode ter sido menor do que 0 ou fora da area a ser escaneada.");
+                        Console.ResetColor();
+                        Console.WriteLine("");
+                        Console.Write("Aperte ENTER para prosseguir.");
+                        Console.ReadLine();
+                        Console.Clear();
+                    }
+                    else if (dirRobII != 'N' && dirRobII != 'S' && dirRobII != 'L' && dirRobII != 'O')
+                    {
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.WriteLine("ERRO!\nPosicao inicial invalida.");
+                        Console.WriteLine("");
+                        Console.WriteLine("Mensagem de erro: Voce digitou uma direcao inicial invalida do robo, utilize uma da disponiveis na tabela abaixo.");
+                        Console.ResetColor();
+                        Console.WriteLine("");
+                        Console.WriteLine("===================");
+                        Console.WriteLine("N = Norte.\nS = Sul.\nL = Leste.\nO = Oeste.");
+                        Console.WriteLine("===================");
+                        Console.WriteLine("");
+                        Console.Write("Aperte ENTER para prosseguir.");
+                        Console.ReadLine();
+                        Console.Clear();
+                    }
+                    else
+                    {
+                        Console.WriteLine("");
 
+                        int dirRobIINum = 0;
+                        char bckDirRobII = dirRobII;
+                        int[] bckCrdRobII = { crdRobII[0], crdRobII[1] };
+                        bool opcaoValidaII = false;
 
-                    Console.WriteLine("Coordenada final e posicionamento do Robo I (X, Y, D): {0}, {1}, {2}.", crdRobI[0], crdRobI[1], dirRobI);
-                    Console.ResetColor();
-                    Console.WriteLine("");
-                    Console.Write("Confirme as informacoes digitadas e aperte ENTER para prosseguir.");
-                    Console.ReadLine();
-                    Console.Clear();
+                        while (opcaoValidaII == false)
+                        {
+                            Console.Write("Digite sequencialmente os comandos para o Robo II (EMEMEMEMDMDM): ");
+                            string cmdStr = Console.ReadLine();
+                            string cmdStrUp = cmdStr.ToUpper();
+                            char[] cmdSqc = cmdStrUp.ToCharArray();
 
+                            switch (dirRobII)
+                            {
+                                case 'N':
+                                    dirRobIINum = 1;
+                                    break;
+                                case 'L':
+                                    dirRobIINum = 2;
+                                    break;
+                                case 'S':
+                                    dirRobIINum = 3;
+                                    break;
+                                case 'O':
+                                    dirRobIINum = 4;
+                                    break;
+                            }
+
+                            for (int i = 0; i < cmdSqc.Length; i++)
+                            {
+                                if (cmdSqc[i] == 'E')
+                                {
+                                    dirRobIINum = dirRobIINum - 1;
+                                    if (dirRobIINum == 0)
+                                    {
+                                        dirRobIINum = 4;
+                                    }
+                                }
+                                else if (cmdSqc[i] == 'D')
+                                {
+                                    dirRobIINum = dirRobIINum + 1;
+                                    if (dirRobIINum == 5)
+                                    {
+                                        dirRobIINum = 1;
+                                    }
+                                }
+                                else if (cmdSqc[i] == 'M')
+                                {
+                                    switch (dirRobIINum)
+                                    {
+                                        case 1:
+                                            crdRobII[1] = crdRobII[1] + 1;
+                                            break;
+                                        case 2:
+                                            crdRobII[0] = crdRobII[0] + 1;
+                                            break;
+                                        case 3:
+                                            crdRobII[1] = crdRobII[1] - 1;
+                                            break;
+                                        case 4:
+                                            crdRobII[0] = crdRobII[0] - 1;
+                                            break;
+                                    }
+                                }
+                            }
+
+                            switch (dirRobIINum)
+                            {
+                                case 1:
+                                    dirRobII = 'N';
+                                    break;
+                                case 2:
+                                    dirRobII = 'L';
+                                    break;
+                                case 3:
+                                    dirRobII = 'S';
+                                    break;
+                                case 4:
+                                    dirRobII = 'O';
+                                    break;
+                            }
+
+                            Console.WriteLine("");
+
+                            if (crdRobII[0] < 0 || crdRobII[1] < 0 || crdRobII[0] >= crdArea[0] || crdRobII[1] >= crdArea[1])
+                            {
+                                Console.ForegroundColor = ConsoleColor.Red;
+                                Console.WriteLine("ERRO!\nPosicionamento do robo invalido.");
+                                Console.WriteLine("");
+                                Console.WriteLine("Mensagem de erro: Voce digitou um comando que leva a uma coordenada invalida, verifique se as instrucoes levam para uma coordenada x,y dentro da area determinada.");
+                                Console.ResetColor();
+                                Console.WriteLine("");
+                                Console.Write("Aperte ENTER para prosseguir.");
+                                Console.ReadLine();
+                                Console.WriteLine("");
+                                dirRobII = bckDirRobII;
+                                crdRobII[0] = bckCrdRobII[0];
+                                crdRobII[1] = bckCrdRobII[1];
+                            }
+                            else
+                            {
+                                opcaoValidaII = true;
+                            }
+                        }
+
+                        Console.ForegroundColor = ConsoleColor.Green;
+                        Console.WriteLine("Coordenada final e posicionamento do Robo I (X, Y, D): {0}, {1}, {2}.", crdRobI[0], crdRobI[1], dirRobI);
+                        Console.WriteLine("Coordenada final e posicionamento do Robo II (X, Y, D): {0}, {1}, {2}.", crdRobII[0], crdRobII[1], dirRobII);
+                        Console.ResetColor();
+                        Console.WriteLine("");
+                        Console.Write("Confirme as informacoes digitadas e aperte ENTER para prosseguir.");
+                        Console.ReadLine();
+                        Console.Clear();
+
+                    }
                 }
             }
         }
