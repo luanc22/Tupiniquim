@@ -236,7 +236,7 @@ namespace Tupiniquim.ConsoleApp
 
                         // Linha 239 a Linha 258: Condicoes para verificar se a posicao do robo 1 apos a movimentacao eh valida ou se sera necessario passar outras instrucoes.
 
-                        if (crdRobI[0] < 0 || crdRobI[1] < 0 || crdRobI[0] >= crdArea[0] || crdRobI[1] >= crdArea[1])
+                        if (crdRobI[0] < 0 || crdRobI[1] < 0 || crdRobI[0] > crdArea[0] || crdRobI[1] > crdArea[1])
                         {
                             Console.ForegroundColor = ConsoleColor.Red;
                             Console.WriteLine("ERRO!\nPosicionamento do robo invalido.");
@@ -399,7 +399,7 @@ namespace Tupiniquim.ConsoleApp
 
                             // Linha 402 a Linha 421: Condicoes para verificar se a posicao do robo 2 apos a movimentacao eh valida ou se sera necessario passar outras instrucoes.
 
-                            if (crdRobII[0] < 0 || crdRobII[1] < 0 || crdRobII[0] >= crdArea[0] || crdRobII[1] >= crdArea[1])
+                            if (crdRobII[0] < 0 || crdRobII[1] < 0 || crdRobII[0] > crdArea[0] || crdRobII[1] > crdArea[1])
                             {
                                 Console.ForegroundColor = ConsoleColor.Red;
                                 Console.WriteLine("ERRO!\nPosicionamento do robo invalido.");
